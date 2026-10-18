@@ -24,7 +24,8 @@ if (scene) {
     const moveScene = () => {
       const sceneRect = scene.getBoundingClientRect();
       const distance = Math.max(0, Math.min(1, (window.innerHeight - sceneRect.top) / window.innerHeight));
-      sceneCore.style.transform = `translateY(${distance * -16}px) rotate(${distance * 2}deg)`;
+      sceneCore.style.setProperty("--scene-offset", `${distance * -16}px`);
+      sceneCore.style.setProperty("--scene-turn", `${distance * 2}deg`);
       scheduled = false;
     };
 
