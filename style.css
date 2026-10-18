@@ -279,9 +279,13 @@ a:focus-visible {
 }
 
 .scene-core {
+  --scene-offset: 0px;
+  --scene-turn: 0deg;
+  --scene-scale: 1;
   position: relative;
   width: 420px;
   height: 420px;
+  transform: translateY(var(--scene-offset)) rotate(var(--scene-turn)) scale(var(--scene-scale));
   transition: transform 280ms ease-out;
 }
 
@@ -710,7 +714,7 @@ a:focus-visible {
   }
 
   .scene-core {
-    transform: scale(0.87);
+    --scene-scale: 0.87;
   }
 
   .projects-grid {
@@ -768,7 +772,7 @@ a:focus-visible {
   }
 
   .scene-core {
-    transform: scale(0.82);
+    --scene-scale: 0.82;
   }
 
   .heading-row {
@@ -815,7 +819,7 @@ a:focus-visible {
   }
 
   .scene-core {
-    transform: scale(0.67);
+    --scene-scale: 0.67;
   }
 
   .stage-note {
