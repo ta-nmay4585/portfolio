@@ -3,96 +3,190 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tanmay | Portfolio</title>
+    <meta name="theme-color" content="#0b0d12">
+    <meta name="description" content="Tanmay's portfolio — software, data, and thoughtful digital experiences.">
+    <title>Tanmay — Software & Web</title>
     <link rel="stylesheet" href="style.css">
   </head>
-  <body>
+  <body id="top">
+    <a class="skip-link" href="#main">Skip to content</a>
 
-    <!-- BOX 1: NAVIGATION BAR -->
-    <nav class="navbar">
-      <div class="logo">Tanmay<span>.dev</span></div>
-      <ul class="nav-links">
-        <li><a href="#about">About</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#contact" class="nav-btn">Contact</a></li>
-        <li><button id="theme-toggle" class="theme-btn">☀️ Light</button></li>
-      </ul>
-    </nav>
+    <header class="site-header">
+      <nav class="navbar" aria-label="Main navigation">
+        <a class="brand" href="#top" aria-label="Tanmay, home">
+          <span class="brand-mark">t</span>
+          <span>tanmay<span class="brand-accent">.dev</span></span>
+        </a>
 
-    <!-- BOX 2: HERO SECTION -->
-    <header id="about" class="hero">
-      <div class="badge">Software Engineering & Data Science</div>
-      <h1>Hi, I'm <span>Tanmay</span>.<br>I build clean software & web apps.</h1>
-      <p>
-        Passionate about Python, C++, backend architecture, and problem-solving. 
-        Welcome to my personal corner of the web.
-      </p>
-      <div class="hero-buttons">
-        <a href="#projects" class="btn primary-btn">View My Projects</a>
-        <a href="#contact" class="btn secondary-btn">Get in Touch</a>
-      </div>
+        <div class="nav-right">
+          <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+          <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch to light mode" aria-pressed="false">
+            <span class="theme-icon" aria-hidden="true">☼</span>
+            <span class="theme-label">Light mode</span>
+          </button>
+        </div>
+      </nav>
     </header>
 
-    <!-- BOX 3A: SKILLS SECTION -->
-    <section id="skills" class="section">
-      <h2 class="section-title">Technical <span>Skills</span></h2>
-      <div class="skills-container">
-        <span class="skill-tag">Python</span>
-        <span class="skill-tag">C++</span>
-        <span class="skill-tag">Data Structures & Algorithms</span>
-        <span class="skill-tag">FastAPI & Flask</span>
-        <span class="skill-tag">HTML5 & CSS3</span>
-        <span class="skill-tag">Linux (WSL2) & Git</span>
-        <span class="skill-tag">Data Science</span>
-      </div>
-    </section>
-
-    <!-- BOX 3B: PROJECTS GRID SECTION -->
-    <section id="projects" class="section">
-      <h2 class="section-title">Featured <span>Projects</span></h2>
-      <div class="projects-grid">
-
-        <div class="project-card">
-          <div class="project-tag">Python • FastAPI</div>
-          <h3>Backend API Service</h3>
-          <p>A fast, modular REST API built with Python and FastAPI for handling structured data requests and authentication.</p>
-          <a href="#" class="project-link">View Code →</a>
+    <main id="main">
+      <section id="about" class="hero content-wrap">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="eyebrow-line"></span> SOFTWARE · DATA · WEB</p>
+          <h1>Building thoughtful <span>digital experiences.</span></h1>
+          <p class="hero-intro">
+            I'm Tanmay. I enjoy solving problems with Python, C++, and backend technologies,
+            and turning ideas into useful software.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#projects">
+              Explore my work <span aria-hidden="true">↗</span>
+            </a>
+            <a class="button button-quiet" href="https://github.com/ta-nmay4585" target="_blank" rel="noopener noreferrer">
+              Find me on GitHub <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+          <div class="hero-note">
+            <span class="note-mark" aria-hidden="true">✳</span>
+            <span>Curious by nature. Always learning by building.</span>
+          </div>
         </div>
 
-        <div class="project-card">
-          <div class="project-tag">C++ • Algorithms</div>
-          <h3>DSA Problem Solver & CLI Tool</h3>
-          <p>High-performance command-line utilities and algorithm implementations focused on time and space optimization.</p>
-          <a href="#" class="project-link">View Code →</a>
+        <div class="hero-art" aria-hidden="true">
+          <div class="art-orbit art-orbit-one"></div>
+          <div class="art-orbit art-orbit-two"></div>
+          <div class="art-glow"></div>
+          <div class="code-card">
+            <div class="code-card-top">
+              <div class="window-dots"><i></i><i></i><i></i></div>
+              <span>about.py</span>
+              <span class="code-card-menu">•••</span>
+            </div>
+            <div class="code-content">
+              <p><span class="code-muted">01</span> <span class="code-purple">class</span> <span class="code-green">Developer</span>:</p>
+              <p><span class="code-muted">02</span> &nbsp;&nbsp;name = <span class="code-amber">"Tanmay"</span></p>
+              <p><span class="code-muted">03</span> &nbsp;&nbsp;focus = [</p>
+              <p><span class="code-muted">04</span> &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-amber">"software"</span>,</p>
+              <p><span class="code-muted">05</span> &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-amber">"data"</span>,</p>
+              <p><span class="code-muted">06</span> &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-amber">"web"</span></p>
+              <p><span class="code-muted">07</span> &nbsp;&nbsp;]</p>
+              <p><span class="code-muted">08</span> &nbsp;&nbsp;keep_learning = <span class="code-blue">True</span></p>
+            </div>
+            <div class="code-card-footer">
+              <span class="footer-indicator"></span>
+              <span>building with curiosity</span>
+              <span class="footer-arrows">⌘ &nbsp; ↗</span>
+            </div>
+          </div>
+          <div class="floating-chip chip-python"><span>Py</span> Python</div>
+          <div class="floating-chip chip-cpp"><span>C++</span> C++</div>
+          <div class="art-caption">IDEAS <span>→</span> CODE <span>→</span> IMPACT</div>
+        </div>
+      </section>
+
+      <section id="skills" class="section content-wrap">
+        <div class="section-heading">
+          <p class="eyebrow"><span class="eyebrow-line"></span> WHAT I WORK WITH</p>
+          <h2>Tools for turning ideas into <span>working software.</span></h2>
+        </div>
+        <div class="skills-container">
+          <span class="skill-tag"><span class="skill-dot"></span>Python</span>
+          <span class="skill-tag"><span class="skill-dot"></span>C++</span>
+          <span class="skill-tag"><span class="skill-dot"></span>Data Structures &amp; Algorithms</span>
+          <span class="skill-tag"><span class="skill-dot"></span>FastAPI &amp; Flask</span>
+          <span class="skill-tag"><span class="skill-dot"></span>HTML &amp; CSS</span>
+          <span class="skill-tag"><span class="skill-dot"></span>Linux &amp; Git</span>
+          <span class="skill-tag"><span class="skill-dot"></span>Data Science</span>
+        </div>
+      </section>
+
+      <section id="projects" class="section content-wrap">
+        <div class="section-heading section-heading-row">
+          <div>
+            <p class="eyebrow"><span class="eyebrow-line"></span> SELECTED WORK</p>
+            <h2>Things I've been <span>building.</span></h2>
+          </div>
+          <span class="section-index">01 — 03</span>
         </div>
 
-        <div class="project-card">
-          <div class="project-tag">Data Science • Python</div>
-          <h3>Data Analysis Pipeline</h3>
-          <p>Automated data cleaning and visualization workflow for extracting insights from large structured datasets.</p>
-          <a href="#" class="project-link">View Code →</a>
+        <div class="projects-grid">
+          <article class="project-card project-card-violet">
+            <div class="project-topline">
+              <span class="project-number">01</span>
+              <span class="project-tag">PYTHON · FASTAPI</span>
+            </div>
+            <div class="project-art project-art-api" aria-hidden="true">
+              <span class="api-node api-node-one">GET</span>
+              <span class="api-node api-node-two">POST</span>
+              <span class="api-core">API</span>
+              <span class="api-line"></span>
+            </div>
+            <h3>Backend API Service</h3>
+            <p>A modular REST API for handling structured data requests, built with Python and FastAPI.</p>
+            <span class="project-foot">BACKEND DEVELOPMENT <span aria-hidden="true">✳</span></span>
+          </article>
+
+          <article class="project-card project-card-cyan">
+            <div class="project-topline">
+              <span class="project-number">02</span>
+              <span class="project-tag">C++ · ALGORITHMS</span>
+            </div>
+            <div class="project-art project-art-algo" aria-hidden="true">
+              <span class="algo-bar bar-one"></span>
+              <span class="algo-bar bar-two"></span>
+              <span class="algo-bar bar-three"></span>
+              <span class="algo-bar bar-four"></span>
+              <span class="algo-label">O(n log n)</span>
+            </div>
+            <h3>DSA Problem Solver</h3>
+            <p>Command-line utilities and algorithm implementations focused on clear, efficient solutions.</p>
+            <span class="project-foot">PROBLEM SOLVING <span aria-hidden="true">✳</span></span>
+          </article>
+
+          <article class="project-card project-card-amber">
+            <div class="project-topline">
+              <span class="project-number">03</span>
+              <span class="project-tag">DATA · PYTHON</span>
+            </div>
+            <div class="project-art project-art-data" aria-hidden="true">
+              <span class="data-grid"></span>
+              <span class="data-point point-one"></span>
+              <span class="data-point point-two"></span>
+              <span class="data-point point-three"></span>
+              <span class="data-point point-four"></span>
+              <span class="data-point point-five"></span>
+            </div>
+            <h3>Data Analysis Pipeline</h3>
+            <p>A workflow for cleaning, exploring, and visualizing structured data to uncover useful insights.</p>
+            <span class="project-foot">DATA EXPLORATION <span aria-hidden="true">✳</span></span>
+          </article>
         </div>
+      </section>
 
-      </div>
-    </section>
+      <section id="contact" class="contact-section content-wrap">
+        <div class="contact-card">
+          <div class="contact-decoration" aria-hidden="true">✳</div>
+          <p class="eyebrow"><span class="eyebrow-line"></span> LET'S CONNECT</p>
+          <h2>Have an idea?<br><span>Let's build it.</span></h2>
+          <p class="contact-copy">I'm always happy to connect with people who enjoy making useful things.</p>
+          <a class="button button-primary" href="https://github.com/ta-nmay4585" target="_blank" rel="noopener noreferrer">
+            Say hello on GitHub <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </section>
+    </main>
 
-    <!-- BOX 4: CONTACT & FOOTER -->
-    <footer id="contact" class="footer">
-      <h2>Let's Build Something Together</h2>
-      <p>Have a question, project idea, or want to connect? Send a message below.</p>
-
-      <form id="contact-form" class="contact-form">
-        <input type="text" id="name-input" placeholder="Your Name" required>
-        <input type="email" id="email-input" placeholder="Your Email" required>
-        <textarea id="message-input" rows="4" placeholder="Your Message" required></textarea>
-        <button type="submit" class="btn primary-btn submit-btn">Send Message</button>
-        <p id="form-status" class="form-status"></p>
-      </form>
-
-      <div class="footer-bottom">
-        <p>© 2026 Tanmay. Built from scratch with HTML, CSS & JS on WSL2.</p>
-      </div>
+    <footer class="site-footer content-wrap">
+      <a class="brand footer-brand" href="#top">
+        <span class="brand-mark">t</span>
+        <span>tanmay<span class="brand-accent">.dev</span></span>
+      </a>
+      <p>© 2026 Tanmay. Built with curiosity.</p>
+      <a class="back-to-top" href="#top">Back to top ↑</a>
     </footer>
 
     <script src="script.js"></script>
