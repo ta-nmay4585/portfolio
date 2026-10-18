@@ -263,7 +263,7 @@ a:focus-visible {
   background-size: 45px 45px;
 }
 
- .hero-stage {
+  .hero-stage {
   min-height: 540px;
   position: relative;
   overflow: hidden;
@@ -279,10 +279,12 @@ a:focus-visible {
 }
 
 .scene-core {
-  --orbit-radius: 154px;
+  --scene-scale: 1;
   position: relative;
   width: 420px;
   height: 420px;
+  transform: scale(var(--scene-scale));
+  transform-origin: center;
 }
 
 .code-card {
@@ -290,18 +292,17 @@ a:focus-visible {
   z-index: var(--layer, 1);
   top: 50%;
   left: 50%;
-  width: clamp(104px, 13vw, 124px);
-  height: clamp(136px, 16.5vw, 158px);
+  width: 136px;
+  height: 164px;
   overflow: hidden;
   border: 1px solid rgba(57, 45, 35, 0.12);
   border-radius: 7px;
   box-shadow: 0 10px 16px rgba(65, 47, 23, 0.11);
   transform-origin: center center;
   transform:
-    translate(-50%, -50%)
-    rotate(var(--angle))
-    translateY(calc(0px - var(--orbit-radius)));
-  will-change: transform;
+    translate(calc(-50% + var(--x)), calc(-50% + var(--y)))
+    rotate(var(--r));
+  will-change: transform, opacity;
 }
 
 .code-card-inner {
@@ -718,7 +719,7 @@ a:focus-visible {
   }
 
   .scene-core {
-    --orbit-radius: 112px;
+    --scene-scale: 0.78;
   }
 
   .skill-card-grid {
@@ -836,10 +837,7 @@ a:focus-visible {
     grid-template-columns: 1fr;
   }
 
-  .skill-card {
-    min-height: 138px;
-  }
-
+  .skill-card,
   .skill-card .code-card-inner {
     min-height: 138px;
   }
