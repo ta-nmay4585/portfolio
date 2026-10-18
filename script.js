@@ -1,40 +1,39 @@
 const scene = document.getElementById("code-card-scene");
-const heroStage = document.querySelector(".hero-stage");
-const skillsSection = document.getElementById("skills");
-const skillsHeading = skillsSection?.querySelector(".section-heading");
 const targetGrid = document.getElementById("skill-card-grid");
+const skillsHeading = document.querySelector("#skills .section-heading");
 const sourceCards = scene ? [...scene.querySelectorAll(".code-card")] : [];
 const targetCards = targetGrid ? [...targetGrid.querySelectorAll(".skill-card")] : [];
 const centerBadge = scene?.querySelector(".scene-center");
 const scrollLabel = document.querySelector(".stage-note");
-const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const desktop = window.matchMedia("(min-width: 768px)");
 
 let travelLayer;
 let travelCards = [];
-let animationFrame;
-let animationIsActive = false;
+let frameId = null;
+let handoffEnabled = false;
 
-const clamp = (value, min = 0, max = 1) => Math.min(Math.max(value, min), max);
+const clamp = (value) => Math.min(1, Math.max(0, value));
 const mix = (start, end, amount) => start + (end - start) * amount;
-const smoothstep = (amount) => amount * amount * (3 - 2 * amount);
+const ease = (amount) => amount * amount * (3 - 2 * amount);
 
-function makeTravelCards() {
+function createTravelCards() {
   if (travelLayer) return;
 
   travelLayer = document.createElement("div");
   travelLayer.className = "card-travel-layer";
   travelLayer.setAttribute("aria-hidden", "true");
 
-  travelCards = sourceCards.map((sourceCard) => {
+  travelCards = sourceCards.map((sourceCard, index) => {
     const color = ["yellow", "orange", "blue", "coral", "peach"].find((name) =>
       sourceCard.classList.contains(name)
     );
-    const card = document.createElement("div");
-    card.className = `travel-card ${color}`;
-    card.innerHTML = sourceCard.querySelector(".code-card-inner").outerHTML;
-    travelLayer.append(card);
-    return card;
+    const travelCard = document.createElement("div");
+    travelCard.className = `travel-card ${color}`;
+    travelCard.style.zIndex = String(30 + index);
+    travelCard.append(sourceCard.querySelector(".code-card-inner").cloneNode(true));
+    travelLayer.append(travelCard);
+    return travelCard;
   });
 
   document.body.append(travelLayer);
@@ -42,48 +41,48 @@ function makeTravelCards() {
 
 function removeTravelCards() {
   travelLayer?.remove();
-  travelLayer = undefined;
+  travelLayer = null;
   travelCards = [];
 }
 
-function transitionProgress() {
-  const startLine = window.innerHeight * 0.86;
-  const endLine = window.innerHeight * 0.18;
+function getProgress() {
   const headingTop = skillsHeading.getBoundingClientRect().top;
-  return clamp((startLine - headingTop) / (startLine - endLine));
+  const startLine = window.innerHeight * 0.88;
+  const endLine = window.innerHeight * 0.18;
+  return ease(clamp((startLine - headingTop) / (startLine - endLine)));
 }
 
-function updateCardHandoff() {
-  if (!animationIsActive) return;
+function updateHandoff() {
+  frameId = null;
+  if (!handoffEnabled) return;
 
-  const rawProgress = transitionProgress();
-  const progress = smoothstep(rawProgress);
-  const sourceOpacity = 1 - clamp((progress - 0.03) / 0.19);
-  const targetOpacity = clamp((progress - 0.66) / 0.34);
-  const travellerOpacity = 1 - clamp((progress - 0.87) / 0.13);
+  const progress = getProgress();
+  const sourceOpacity = 1 - clamp(progress / 0.18);
+  const travelFadeIn = clamp(progress / 0.08);
+  const travelFadeOut = 1 - clamp((progress - 0.78) / 0.22);
+  const gridOpacity = clamp((progress - 0.78) / 0.22);
 
   sourceCards.forEach((card) => {
     card.style.opacity = sourceOpacity.toFixed(3);
   });
-
-  targetGrid.style.opacity = targetOpacity.toFixed(3);
+  targetGrid.style.opacity = gridOpacity.toFixed(3);
 
   if (centerBadge) {
-    const badgeFade = 1 - clamp((progress - 0.08) / 0.30);
-    centerBadge.style.opacity = badgeFade.toFixed(3);
-    centerBadge.style.transform = `translate(-50%, -50%) scale(${0.72 + badgeFade * 0.28})`;
+    const opacity = 1 - clamp(progress / 0.18);
+    centerBadge.style.opacity = opacity.toFixed(3);
+    centerBadge.style.transform = `translate(-50%, -50%) scale(${0.82 + opacity * 0.18})`;
   }
 
   if (scrollLabel) {
-    const labelFade = 1 - clamp((progress - 0.06) / 0.24);
-    scrollLabel.style.opacity = labelFade.toFixed(3);
-    scrollLabel.style.transform = `translateY(${(1 - labelFade) * 12}px)`;
+    const opacity = 1 - clamp(progress / 0.15);
+    scrollLabel.style.opacity = opacity.toFixed(3);
+    scrollLabel.style.transform = `translateY(${(1 - opacity) * 10}px)`;
   }
 
   sourceCards.forEach((sourceCard, index) => {
-    const traveller = travelCards[index];
+    const travelCard = travelCards[index];
     const targetCard = targetCards[index];
-    if (!traveller || !targetCard) return;
+    if (!travelCard || !targetCard) return;
 
     const sourceRect = sourceCard.getBoundingClientRect();
     const targetRect = targetCard.getBoundingClientRect();
@@ -91,31 +90,35 @@ function updateCardHandoff() {
     const sourceCenterY = sourceRect.top + sourceRect.height / 2;
     const targetCenterX = targetRect.left + targetRect.width / 2;
     const targetCenterY = targetRect.top + targetRect.height / 2;
-    const startRotation = Number.parseFloat(
-      getComputedStyle(sourceCard).getPropertyValue("--r")
+    const startAngle = Number.parseFloat(
+      getComputedStyle(sourceCard).getPropertyValue("--angle")
     ) || 0;
     const width = mix(sourceCard.offsetWidth, targetRect.width, progress);
     const height = mix(sourceCard.offsetHeight, targetRect.height, progress);
+    const left = mix(sourceCenterX, targetCenterX, progress) - width / 2;
+    const top = mix(sourceCenterY, targetCenterY, progress) - height / 2;
+    const rotation = mix(startAngle, 0, progress);
+    const opacity = travelFadeIn * travelFadeOut;
 
-    traveller.style.left = `${mix(sourceCenterX, targetCenterX, progress) - width / 2}px`;
-    traveller.style.top = `${mix(sourceCenterY, targetCenterY, progress) - height / 2}px`;
-    traveller.style.width = `${width}px`;
-    traveller.style.height = `${height}px`;
-    traveller.style.opacity = travellerOpacity.toFixed(3);
-    traveller.style.transform = `rotate(${mix(startRotation, 0, progress)}deg)`;
+    travelCard.style.left = `${left}px`;
+    travelCard.style.top = `${top}px`;
+    travelCard.style.width = `${width}px`;
+    travelCard.style.height = `${height}px`;
+    travelCard.style.opacity = opacity.toFixed(3);
+    travelCard.style.transform = `rotate(${rotation}deg)`;
   });
 }
 
-function requestUpdate() {
-  cancelAnimationFrame(animationFrame);
-  animationFrame = requestAnimationFrame(updateCardHandoff);
+function scheduleUpdate() {
+  if (frameId === null) {
+    frameId = requestAnimationFrame(updateHandoff);
+  }
 }
 
 function resetStaticLayout() {
+  handoffEnabled = false;
   document.body.classList.remove("cards-animated");
-  sourceCards.forEach((card) => {
-    card.style.opacity = "";
-  });
+  sourceCards.forEach((card) => card.style.removeProperty("opacity"));
   targetGrid?.style.removeProperty("opacity");
   centerBadge?.style.removeProperty("opacity");
   centerBadge?.style.removeProperty("transform");
@@ -124,35 +127,35 @@ function resetStaticLayout() {
   removeTravelCards();
 }
 
-function configureCardHandoff() {
+function configureHandoff() {
   const canAnimate =
     scene &&
-    heroStage &&
-    skillsHeading &&
     targetGrid &&
-    sourceCards.length === targetCards.length &&
+    skillsHeading &&
+    sourceCards.length === 9 &&
+    targetCards.length === sourceCards.length &&
     desktop.matches &&
-    !prefersReducedMotion.matches;
+    !reducedMotion.matches;
 
   if (!canAnimate) {
-    animationIsActive = false;
     resetStaticLayout();
     return;
   }
 
-  animationIsActive = true;
+  handoffEnabled = true;
   document.body.classList.add("cards-animated");
   scene.classList.add("is-visible");
-  makeTravelCards();
-  requestUpdate();
+  createTravelCards();
+  scheduleUpdate();
 }
 
-if (scene) {
+if (scene && targetGrid && skillsHeading) {
   scene.classList.add("is-visible");
-  configureCardHandoff();
+  configureHandoff();
 
-  window.addEventListener("scroll", requestUpdate, { passive: true });
-  window.addEventListener("resize", configureCardHandoff);
-  desktop.addEventListener("change", configureCardHandoff);
-  prefersReducedMotion.addEventListener("change", configureCardHandoff);
+  window.addEventListener("scroll", scheduleUpdate, { passive: true });
+  window.addEventListener("resize", configureHandoff);
+  desktop.addEventListener("change", configureHandoff);
+  reducedMotion.addEventListener("change", configureHandoff);
+  window.addEventListener("load", scheduleUpdate, { once: true });
 }
