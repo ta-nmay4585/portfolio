@@ -1,4 +1,6 @@
 const scene = document.getElementById("code-card-scene");
+const heroStage = document.querySelector(".hero-stage");
+const sceneCore = scene?.querySelector(".scene-core");
 const targetGrid = document.getElementById("skill-card-grid");
 const skillsHeading = document.querySelector("#skills .section-heading");
 const sourceCards = scene ? [...scene.querySelectorAll(".code-card")] : [];
@@ -8,6 +10,19 @@ const scrollLabel = document.querySelector(".stage-note");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const desktop = window.matchMedia("(min-width: 768px)");
 
+const birdFormation = [
+  [-144, -72, -34],
+  [-108, -40, -26],
+  [-72, -10, -18],
+  [-36, 16, -9],
+  [0, 32, 0],
+  [36, 16, 9],
+  [72, -10, 18],
+  [108, -40, 26],
+  [144, -72, 34]
+];
+
+const birdCardSize = { width: 88, height: 112 };
 let travelLayer;
 let travelCards = [];
 let frameId = null;
@@ -47,8 +62,8 @@ function removeTravelCards() {
 
 function getProgress() {
   const headingTop = skillsHeading.getBoundingClientRect().top;
-  const startLine = window.innerHeight * 0.88;
-  const endLine = window.innerHeight * 0.18;
+  const startLine = window.innerHeight * 0.98;
+  const endLine = window.innerHeight * 0.15;
   return ease(clamp((startLine - headingTop) / (startLine - endLine)));
 }
 
@@ -57,32 +72,55 @@ function updateHandoff() {
   if (!handoffEnabled) return;
 
   const progress = getProgress();
-  const sourceOpacity = 1 - clamp(progress / 0.18);
-  const travelFadeIn = clamp(progress / 0.08);
-  const travelFadeOut = 1 - clamp((progress - 0.78) / 0.22);
-  const gridOpacity = clamp((progress - 0.78) / 0.22);
+  const gatherEnd = 0.30;
+  const travelEnd = 0.74;
+  const groupTravel = ease(clamp((progress - gatherEnd) / (travelEnd - gatherEnd)));
+  const crossfade = clamp((progress - 0.88) / 0.12);
+  const sourceOpacity = 1 - clamp(progress / 0.14);
+  const travelFadeIn = clamp(progress / 0.14);
 
-  sourceCards.forEach((card) => {
-    card.style.opacity = sourceOpacity.toFixed(3);
-  });
-  targetGrid.style.opacity = gridOpacity.toFixed(3);
+  targetGrid.style.transform = `translateY(${(1 - progress) * 42}px)`;
+  targetGrid.style.opacity = crossfade.toFixed(3);
 
   if (centerBadge) {
-    const opacity = 1 - clamp(progress / 0.18);
+    const opacity = 1 - clamp(progress / 0.16);
     centerBadge.style.opacity = opacity.toFixed(3);
     centerBadge.style.transform = `translate(-50%, -50%) scale(${0.82 + opacity * 0.18})`;
   }
 
   if (scrollLabel) {
-    const opacity = 1 - clamp(progress / 0.15);
+    const opacity = 1 - clamp(progress / 0.12);
     scrollLabel.style.opacity = opacity.toFixed(3);
     scrollLabel.style.transform = `translateY(${(1 - opacity) * 10}px)`;
   }
 
+  sourceCards.forEach((card) => {
+    card.style.opacity = sourceOpacity.toFixed(3);
+  });
+
+  const stageRect = heroStage.getBoundingClientRect();
+  const gridRect = targetGrid.getBoundingClientRect();
+  const fanCenter = {
+    x: stageRect.left + stageRect.width / 2,
+    y: stageRect.top + stageRect.height / 2
+  };
+  const gridCenter = {
+    x: gridRect.left + gridRect.width / 2,
+    y: gridRect.top + gridRect.height / 2
+  };
+  const formationCenter = {
+    x: mix(fanCenter.x, gridCenter.x, groupTravel),
+    y: mix(fanCenter.y, gridCenter.y, groupTravel)
+  };
+  const sceneScale = Number.parseFloat(
+    getComputedStyle(sceneCore).getPropertyValue("--scene-scale")
+  ) || 1;
+
   sourceCards.forEach((sourceCard, index) => {
     const travelCard = travelCards[index];
     const targetCard = targetCards[index];
-    if (!travelCard || !targetCard) return;
+    const formation = birdFormation[index];
+    if (!travelCard || !targetCard || !formation) return;
 
     const sourceRect = sourceCard.getBoundingClientRect();
     const targetRect = targetCard.getBoundingClientRect();
@@ -91,17 +129,29 @@ function updateHandoff() {
     const targetCenterX = targetRect.left + targetRect.width / 2;
     const targetCenterY = targetRect.top + targetRect.height / 2;
     const startAngle = Number.parseFloat(
-      getComputedStyle(sourceCard).getPropertyValue("--angle")
+      getComputedStyle(sourceCard).getPropertyValue("--r")
     ) || 0;
-    const width = mix(sourceCard.offsetWidth, targetRect.width, progress);
-    const height = mix(sourceCard.offsetHeight, targetRect.height, progress);
-    const left = mix(sourceCenterX, targetCenterX, progress) - width / 2;
-    const top = mix(sourceCenterY, targetCenterY, progress) - height / 2;
-    const rotation = mix(startAngle, 0, progress);
-    const opacity = travelFadeIn * travelFadeOut;
+    const gatherDelay = index * 0.006;
+    const gather = ease(clamp((progress - gatherDelay) / 0.25));
+    const land = ease(clamp((progress - travelEnd) / (1 - travelEnd)));
+    const birdX = formationCenter.x + formation[0];
+    const birdY = formationCenter.y + formation[1];
+    const gatheredX = mix(sourceCenterX, birdX, gather);
+    const gatheredY = mix(sourceCenterY, birdY, gather);
+    const sourceWidth = sourceCard.offsetWidth * sceneScale;
+    const sourceHeight = sourceCard.offsetHeight * sceneScale;
+    const gatheredWidth = mix(sourceWidth, birdCardSize.width, gather);
+    const gatheredHeight = mix(sourceHeight, birdCardSize.height, gather);
+    const gatheredRotation = mix(startAngle, formation[2], gather);
+    const centerX = mix(gatheredX, targetCenterX, land);
+    const centerY = mix(gatheredY, targetCenterY, land);
+    const width = mix(gatheredWidth, targetRect.width, land);
+    const height = mix(gatheredHeight, targetRect.height, land);
+    const rotation = mix(gatheredRotation, 0, land);
+    const opacity = travelFadeIn * (1 - crossfade);
 
-    travelCard.style.left = `${left}px`;
-    travelCard.style.top = `${top}px`;
+    travelCard.style.left = `${centerX - width / 2}px`;
+    travelCard.style.top = `${centerY - height / 2}px`;
     travelCard.style.width = `${width}px`;
     travelCard.style.height = `${height}px`;
     travelCard.style.opacity = opacity.toFixed(3);
@@ -120,6 +170,7 @@ function resetStaticLayout() {
   document.body.classList.remove("cards-animated");
   sourceCards.forEach((card) => card.style.removeProperty("opacity"));
   targetGrid?.style.removeProperty("opacity");
+  targetGrid?.style.removeProperty("transform");
   centerBadge?.style.removeProperty("opacity");
   centerBadge?.style.removeProperty("transform");
   scrollLabel?.style.removeProperty("opacity");
@@ -130,6 +181,8 @@ function resetStaticLayout() {
 function configureHandoff() {
   const canAnimate =
     scene &&
+    heroStage &&
+    sceneCore &&
     targetGrid &&
     skillsHeading &&
     sourceCards.length === 9 &&
@@ -149,7 +202,7 @@ function configureHandoff() {
   scheduleUpdate();
 }
 
-if (scene && targetGrid && skillsHeading) {
+if (scene && heroStage && targetGrid && skillsHeading) {
   scene.classList.add("is-visible");
   configureHandoff();
 
