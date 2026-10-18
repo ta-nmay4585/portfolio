@@ -460,6 +460,7 @@ a:focus-visible {
 }
 
 .travel-card .code-card-inner {
+  min-height: 0;
   height: 100%;
   padding: 14px;
   transform: none;
