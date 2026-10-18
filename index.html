@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tanmay | Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+
+    <!-- BOX 1: NAVIGATION BAR -->
+    <nav class="navbar">
+      <div class="logo">Tanmay<span>.dev</span></div>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact" class="nav-btn">Contact</a></li>
+        <li><button id="theme-toggle" class="theme-btn">☀️ Light</button></li>
+      </ul>
+    </nav>
+
+    <!-- BOX 2: HERO SECTION -->
+    <header id="about" class="hero">
+      <div class="badge">Software Engineering & Data Science</div>
+      <h1>Hi, I'm <span>Tanmay</span>.<br>I build clean software & web apps.</h1>
+      <p>
+        Passionate about Python, C++, backend architecture, and problem-solving. 
+        Welcome to my personal corner of the web.
+      </p>
+      <div class="hero-buttons">
+        <a href="#projects" class="btn primary-btn">View My Projects</a>
+        <a href="#contact" class="btn secondary-btn">Get in Touch</a>
+      </div>
+    </header>
+
+    <!-- BOX 3A: SKILLS SECTION -->
+    <section id="skills" class="section">
+      <h2 class="section-title">Technical <span>Skills</span></h2>
+      <div class="skills-container">
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">C++</span>
+        <span class="skill-tag">Data Structures & Algorithms</span>
+        <span class="skill-tag">FastAPI & Flask</span>
+        <span class="skill-tag">HTML5 & CSS3</span>
+        <span class="skill-tag">Linux (WSL2) & Git</span>
+        <span class="skill-tag">Data Science</span>
+      </div>
+    </section>
+
+    <!-- BOX 3B: PROJECTS GRID SECTION -->
+    <section id="projects" class="section">
+      <h2 class="section-title">Featured <span>Projects</span></h2>
+      <div class="projects-grid">
+
+        <div class="project-card">
+          <div class="project-tag">Python • FastAPI</div>
+          <h3>Backend API Service</h3>
+          <p>A fast, modular REST API built with Python and FastAPI for handling structured data requests and authentication.</p>
+          <a href="#" class="project-link">View Code →</a>
+        </div>
+
+        <div class="project-card">
+          <div class="project-tag">C++ • Algorithms</div>
+          <h3>DSA Problem Solver & CLI Tool</h3>
+          <p>High-performance command-line utilities and algorithm implementations focused on time and space optimization.</p>
+          <a href="#" class="project-link">View Code →</a>
+        </div>
+
+        <div class="project-card">
+          <div class="project-tag">Data Science • Python</div>
+          <h3>Data Analysis Pipeline</h3>
+          <p>Automated data cleaning and visualization workflow for extracting insights from large structured datasets.</p>
+          <a href="#" class="project-link">View Code →</a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- BOX 4: CONTACT & FOOTER -->
+    <footer id="contact" class="footer">
+      <h2>Let's Build Something Together</h2>
+      <p>Have a question, project idea, or want to connect? Send a message below.</p>
+
+      <form id="contact-form" class="contact-form">
+        <input type="text" id="name-input" placeholder="Your Name" required>
+        <input type="email" id="email-input" placeholder="Your Email" required>
+        <textarea id="message-input" rows="4" placeholder="Your Message" required></textarea>
+        <button type="submit" class="btn primary-btn submit-btn">Send Message</button>
+        <p id="form-status" class="form-status"></p>
+      </form>
+
+      <div class="footer-bottom">
+        <p>© 2026 Tanmay. Built from scratch with HTML, CSS & JS on WSL2.</p>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

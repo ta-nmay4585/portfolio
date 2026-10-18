@@ -1,0 +1,373 @@
+/* 1. GLOBAL RESET & PAGE DEFAULTS */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #0f172a;
+  color: #f8fafc;
+  font-family: system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+}
+
+/* 2. BOX 1: NAVBAR STYLING */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 20px;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.logo span {
+  color: #6366f1;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 32px;
+  align-items: center;
+}
+
+.nav-links a {
+  color: #cbd5e1;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover {
+  color: #ffffff;
+}
+
+.nav-btn {
+  background-color: #1e293b;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid #334155;
+}
+
+/* 3. BOX 2: HERO SECTION STYLING */
+.hero {
+  max-width: 850px;
+  margin: 80px auto;
+  padding: 0 20px;
+  text-align: center;
+}
+
+.badge {
+  display: inline-block;
+  background-color: rgba(99, 102, 241, 0.15);
+  color: #818cf8;
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.hero h1 {
+  font-size: 52px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -1px;
+  margin-bottom: 20px;
+}
+
+.hero h1 span {
+  color: #6366f1;
+}
+
+.hero p {
+  font-size: 18px;
+  color: #94a3b8;
+  max-width: 600px;
+  margin: 0 auto 36px auto;
+}
+
+.hero-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.btn {
+  text-decoration: none;
+  padding: 14px 28px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 16px;
+  transition: all 0.2s;
+}
+
+.primary-btn {
+  background-color: #6366f1;
+  color: #ffffff;
+}
+
+.primary-btn:hover {
+  background-color: #4f46e5;
+  transform: translateY(-2px);
+}
+
+.secondary-btn {
+  background-color: #1e293b;
+  color: #f8fafc;
+  border: 1px solid #334155;
+}
+
+.secondary-btn:hover {
+  background-color: #334155;
+}
+/* SMOOTH SCROLLING WHEN CLICKING NAVBAR LINKS */
+html {
+  scroll-behavior: smooth;
+}
+
+/* 4. SECTIONS & TITLES */
+.section {
+  max-width: 1100px;
+  margin: 100px auto;
+  padding: 0 20px;
+}
+
+.section-title {
+  font-size: 32px;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.section-title span {
+  color: #6366f1;
+}
+
+/* 5. SKILLS PILLS */
+.skills-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.skill-tag {
+  background-color: #1e293b;
+  color: #e2e8f0;
+  border: 1px solid #334155;
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.skill-tag:hover {
+  border-color: #6366f1;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+/* 6. PROJECTS 3-COLUMN GRID */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.project-card {
+  background-color: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 16px;
+  padding: 32px;
+  transition: all 0.25s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-card:hover {
+  transform: translateY(-6px);
+  border-color: #6366f1;
+  box-shadow: 0 12px 30px rgba(99, 102, 241, 0.15);
+}
+
+.project-tag {
+  color: #818cf8;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.project-card h3 {
+  font-size: 22px;
+  margin-bottom: 12px;
+}
+
+.project-card p {
+  color: #94a3b8;
+  font-size: 15px;
+  margin-bottom: 24px;
+  flex-grow: 1;
+}
+
+.project-link {
+  color: #6366f1;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.project-link:hover {
+  color: #818cf8;
+}
+
+/* 7. FOOTER / CONTACT SECTION */
+.footer {
+  background-color: #0b1120;
+  border-top: 1px solid #1e293b;
+  text-align: center;
+  padding: 80px 20px 40px 20px;
+  margin-top: 100px;
+}
+
+.footer h2 {
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+
+.footer p {
+  color: #94a3b8;
+  margin-bottom: 32px;
+}
+
+.footer-bottom {
+  margin-top: 60px;
+  padding-top: 24px;
+  border-top: 1px solid #1e293b;
+  font-size: 14px;
+}
+/* 8. THEME TOGGLE BUTTON */
+.theme-btn {
+  background-color: #1e293b;
+  color: #f8fafc;
+  border: 1px solid #334155;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.theme-btn:hover {
+  border-color: #6366f1;
+}
+
+/* 9. CONTACT FORM */
+.contact-form {
+  max-width: 480px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  background-color: #1e293b;
+  color: #f8fafc;
+  border: 1px solid #334155;
+  padding: 14px 16px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: #6366f1;
+}
+
+.submit-btn {
+  border: none;
+  cursor: pointer;
+}
+
+.form-status {
+  color: #4ade80 !important;
+  font-weight: 600;
+  min-height: 24px;
+  margin-top: 8px;
+}
+
+/* 10. LIGHT MODE OVERRIDES (Activated by JavaScript) */
+body.light-mode {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+body.light-mode .nav-links a {
+  color: #475569;
+}
+
+body.light-mode .nav-btn,
+body.light-mode .theme-btn,
+body.light-mode .secondary-btn,
+body.light-mode .skill-tag,
+body.light-mode .project-card,
+body.light-mode .contact-form input,
+body.light-mode .contact-form textarea {
+  background-color: #ffffff;
+  color: #0f172a;
+  border-color: #cbd5e1;
+}
+
+body.light-mode .hero p,
+body.light-mode .project-card p,
+body.light-mode .footer p {
+  color: #475569;
+}
+
+body.light-mode .footer {
+  background-color: #f1f5f9;
+  border-color: #e2e8f0;
+}
+/* 9. MOBILE RESPONSIVENESS (Screens smaller than 650px) */
+@media (max-width: 650px) {
+  .navbar {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+  }
+
+  .hero {
+    margin: 40px auto;
+  }
+
+  .hero h1 {
+    font-size: 34px;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+  }
+}
