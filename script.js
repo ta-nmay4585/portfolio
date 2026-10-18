@@ -1,30 +1,31 @@
-// 1. DARK / LIGHT MODE TOGGLE
-const themeBtn = document.getElementById("theme-toggle");
+const themeButton = document.getElementById("theme-toggle");
 
-themeBtn.addEventListener("click", () => {
-  // Adds or removes the "light-mode" class on the <body> tag
-  document.body.classList.toggle("light-mode");
+if (themeButton) {
+  const themeIcon = themeButton.querySelector(".theme-icon");
+  const themeLabel = themeButton.querySelector(".theme-label");
+  const savedTheme = localStorage.getItem("tanmay-portfolio-theme");
 
-  // Changes the button text depending on which mode is active
-  if (document.body.classList.contains("light-mode")) {
-    themeBtn.textContent = "🌙 Dark";
-  } else {
-    themeBtn.textContent = "☀️ Light";
+  function setTheme(theme, savePreference = false) {
+    const lightMode = theme === "light";
+    document.body.classList.toggle("light-mode", lightMode);
+    themeButton.setAttribute("aria-pressed", String(lightMode));
+    themeButton.setAttribute(
+      "aria-label",
+      lightMode ? "Switch to dark mode" : "Switch to light mode"
+    );
+
+    themeIcon.textContent = lightMode ? "☾" : "☼";
+    themeLabel.textContent = lightMode ? "Dark mode" : "Light mode";
+
+    if (savePreference) {
+      localStorage.setItem("tanmay-portfolio-theme", lightMode ? "light" : "dark");
+    }
   }
-});
 
-// 2. INTERACTIVE CONTACT FORM
-const contactForm = document.getElementById("contact-form");
-const formStatus = document.getElementById("form-status");
+  setTheme(savedTheme === "light" ? "light" : "dark");
 
-contactForm.addEventListener("submit", (event) => {
-  // Stops the browser from refreshing the page on form submit
-  event.preventDefault();
-
-  // Grabs the name typed by the user
-  const userName = document.getElementById("name-input").value;
-
-  // Shows a confirmation message and clears the form boxes
-  formStatus.textContent = `Thanks ${userName}! Your message has been received.`;
-  contactForm.reset();
-});
+  themeButton.addEventListener("click", () => {
+    const nextTheme = document.body.classList.contains("light-mode") ? "dark" : "light";
+    setTheme(nextTheme, true);
+  });
+}
