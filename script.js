@@ -1,31 +1,44 @@
-const themeButton = document.getElementById("theme-toggle");
+const scene = document.getElementById("code-card-scene");
+const sceneCore = scene?.querySelector(".scene-core");
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-if (themeButton) {
-  const themeIcon = themeButton.querySelector(".theme-icon");
-  const themeLabel = themeButton.querySelector(".theme-label");
-  const savedTheme = localStorage.getItem("tanmay-portfolio-theme");
+if (scene) {
+  const revealScene = () => scene.classList.add("is-visible");
 
-  function setTheme(theme, savePreference = false) {
-    const lightMode = theme === "light";
-    document.body.classList.toggle("light-mode", lightMode);
-    themeButton.setAttribute("aria-pressed", String(lightMode));
-    themeButton.setAttribute(
-      "aria-label",
-      lightMode ? "Switch to dark mode" : "Switch to light mode"
+  if (prefersReducedMotion) {
+    revealScene();
+  } else {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          revealScene();
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.18 }
     );
 
-    themeIcon.textContent = lightMode ? "☾" : "☼";
-    themeLabel.textContent = lightMode ? "Dark mode" : "Light mode";
+    observer.observe(scene);
 
-    if (savePreference) {
-      localStorage.setItem("tanmay-portfolio-theme", lightMode ? "light" : "dark");
-    }
+    let scheduled = false;
+    const moveScene = () => {
+      const sceneRect = scene.getBoundingClientRect();
+      const distance = Math.max(0, Math.min(1, (window.innerHeight - sceneRect.top) / window.innerHeight));
+      sceneCore.style.transform = `translateY(${distance * -16}px) rotate(${distance * 2}deg)`;
+      scheduled = false;
+    };
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (!scheduled) {
+          window.requestAnimationFrame(moveScene);
+          scheduled = true;
+        }
+      },
+      { passive: true }
+    );
+
+    moveScene();
   }
-
-  setTheme(savedTheme === "light" ? "light" : "dark");
-
-  themeButton.addEventListener("click", () => {
-    const nextTheme = document.body.classList.contains("light-mode") ? "dark" : "light";
-    setTheme(nextTheme, true);
-  });
 }
