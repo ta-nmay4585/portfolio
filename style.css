@@ -293,15 +293,16 @@ a:focus-visible {
   top: 50%;
   left: 50%;
   width: 136px;
-  height: 164px;
+  height: 214px;
   overflow: hidden;
   border: 1px solid rgba(57, 45, 35, 0.12);
-  border-radius: 7px;
-  box-shadow: 0 10px 16px rgba(65, 47, 23, 0.11);
+  border-radius: 14px;
+  box-shadow: 0 12px 20px rgba(65, 47, 23, 0.16);
   transform-origin: center center;
   transform:
-    translate(calc(-50% + var(--x)), calc(-50% + var(--y)))
-    rotate(var(--r));
+    translate(-50%, -50%)
+    rotate(var(--r))
+    translateY(-144px);
   will-change: transform, opacity;
 }
 
@@ -369,17 +370,17 @@ a:focus-visible {
   z-index: 50;
   top: 50%;
   left: 50%;
-  width: 54px;
-  height: 54px;
+  width: 82px;
+  height: 82px;
   display: grid;
   place-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.8);
+  border: 6px solid rgba(255, 255, 255, 0.92);
   border-radius: 50%;
   color: #fffaf0;
   background: var(--orange);
-  box-shadow: 0 0 0 7px rgba(247, 244, 236, 0.84);
+  box-shadow: 0 0 0 7px rgba(247, 244, 236, 0.9), 0 8px 18px rgba(65, 47, 23, 0.2);
   font-family: Georgia, serif;
-  font-size: 25px;
+  font-size: 40px;
   transform: translate(-50%, -50%);
 }
 
