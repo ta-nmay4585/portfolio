@@ -72,7 +72,7 @@ function updateHandoff() {
   if (!handoffEnabled) return;
 
   const progress = getProgress();
-  const gatherEnd = 0.30;
+  const gatherEnd = 0.38;
   const travelEnd = 0.74;
   const groupTravel = ease(clamp((progress - gatherEnd) / (travelEnd - gatherEnd)));
   const crossfade = clamp((progress - 0.88) / 0.12);
@@ -131,8 +131,8 @@ function updateHandoff() {
     const startAngle = Number.parseFloat(
       getComputedStyle(sourceCard).getPropertyValue("--r")
     ) || 0;
-    const gatherDelay = index * 0.006;
-    const gather = ease(clamp((progress - gatherDelay) / 0.25));
+    const gatherDelay = index * 0.014;
+    const gather = ease(clamp((progress - gatherDelay) / 0.26));
     const land = ease(clamp((progress - travelEnd) / (1 - travelEnd)));
     const birdX = formationCenter.x + formation[0];
     const birdY = formationCenter.y + formation[1];
