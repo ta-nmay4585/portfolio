@@ -871,3 +871,124 @@ a:focus-visible {
     animation-iteration-count: 1 !important;
   }
 }
+
+/* Scroll handoff: the cards travel from the hero fan into the Skills grid. */
+.skill-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 44px;
+  transition: opacity 90ms linear;
+}
+
+.skill-card {
+  min-height: 174px;
+  overflow: hidden;
+  border: 1px solid rgba(57, 45, 35, 0.12);
+  border-radius: 8px;
+  box-shadow: 0 10px 16px rgba(65, 47, 23, 0.09);
+}
+
+.skill-card.yellow,
+.travel-card.yellow { background: var(--yellow); }
+
+.skill-card.orange,
+.travel-card.orange { background: #ff985f; }
+
+.skill-card.blue,
+.travel-card.blue { background: var(--blue); }
+
+.skill-card.coral,
+.travel-card.coral { background: var(--coral); }
+
+.skill-card.peach,
+.travel-card.peach { background: var(--peach); }
+
+.skill-card .code-card-inner {
+  min-height: 174px;
+  transform: none;
+}
+
+.skill-card:nth-child(3n) .code-card-inner {
+  transform: none;
+}
+
+.cards-animated .skill-card-grid {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cards-animated .scene-center,
+.cards-animated .stage-note {
+  will-change: opacity, transform;
+}
+
+.card-travel-layer {
+  position: fixed;
+  z-index: 30;
+  inset: 0;
+  pointer-events: none;
+}
+
+.travel-card {
+  position: fixed;
+  overflow: hidden;
+  border: 1px solid rgba(57, 45, 35, 0.12);
+  border-radius: 7px;
+  box-shadow: 0 12px 22px rgba(65, 47, 23, 0.16);
+  pointer-events: none;
+  transform-origin: center;
+  will-change: left, top, width, height, transform, opacity;
+}
+
+.travel-card .code-card-inner {
+  transform: none;
+}
+
+@media (max-width: 767px) {
+  .hero {
+    min-height: auto;
+    grid-template-columns: 1fr;
+  }
+
+  .hero-stage {
+    display: none;
+  }
+
+  .skills-section {
+    padding-top: 52px;
+  }
+
+  .skill-card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 30px;
+  }
+
+  .skill-card,
+  .skill-card .code-card-inner {
+    min-height: 150px;
+  }
+}
+
+@media (max-width: 460px) {
+  .skill-card-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero {
+    min-height: auto;
+    grid-template-columns: 1fr;
+  }
+
+  .hero-stage {
+    display: none;
+  }
+
+  .skill-card-grid {
+    opacity: 1 !important;
+  }
+}
+
