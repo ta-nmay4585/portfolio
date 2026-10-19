@@ -41,7 +41,7 @@ function createTravelCards() {
   travelLayer.setAttribute("aria-hidden", "true");
 
   travelCards = sourceCards.map((sourceCard, index) => {
-    const color = ["yellow", "orange", "blue", "coral", "peach"].find((name) =>
+    const color = ["yellow", "orange", "blue", "coral", "peach", "gold"].find((name) =>
       sourceCard.classList.contains(name)
     );
     const travelCard = document.createElement("div");
