@@ -11,15 +11,16 @@ const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const desktop = window.matchMedia("(min-width: 768px)");
 
 const birdFormation = [
-  [-144, -72, -34],
-  [-108, -40, -26],
-  [-72, -10, -18],
-  [-36, 16, -9],
-  [0, 32, 0],
-  [36, 16, 9],
-  [72, -10, 18],
-  [108, -40, 26],
-  [144, -72, 34]
+  [-144, -70, -36],
+  [-112, -43, -28],
+  [-80, -16, -20],
+  [-48, 11, -12],
+  [-16, 31, -4],
+  [16, 31, 4],
+  [48, 11, 12],
+  [80, -16, 20],
+  [112, -43, 28],
+  [144, -70, 36]
 ];
 
 const birdCardSize = { width: 88, height: 112 };
@@ -131,7 +132,7 @@ function updateHandoff() {
     const startAngle = Number.parseFloat(
       getComputedStyle(sourceCard).getPropertyValue("--r")
     ) || 0;
-    const gatherDelay = index * 0.014;
+    const gatherDelay = index * 0.012;
     const gather = ease(clamp((progress - gatherDelay) / 0.26));
     const land = ease(clamp((progress - travelEnd) / (1 - travelEnd)));
     const birdX = formationCenter.x + formation[0];
@@ -185,7 +186,7 @@ function configureHandoff() {
     sceneCore &&
     targetGrid &&
     skillsHeading &&
-    sourceCards.length === 9 &&
+    sourceCards.length === 10 &&
     targetCards.length === sourceCards.length &&
     desktop.matches &&
     !reducedMotion.matches;
