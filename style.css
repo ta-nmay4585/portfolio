@@ -915,3 +915,30 @@ a:focus-visible {
     transition: none;
   }
 }
+
+
+.is-disabled {
+  color: var(--muted);
+  cursor: not-allowed;
+  opacity: 0.62;
+  pointer-events: none;
+}
+
+.nav-links .is-disabled:hover {
+  color: inherit;
+  background: transparent;
+}
+
+.button-text.is-disabled::after {
+  display: none;
+}
+
+.project-link.is-disabled {
+  display: inline-flex;
+  gap: 7px;
+  padding-top: 13px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+}
