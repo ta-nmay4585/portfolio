@@ -702,6 +702,13 @@ a:focus-visible {
   z-index: 1;
 }
 
+.contact-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+}
+
 .contact-action p {
   max-width: 250px;
   margin: 0 0 21px;
