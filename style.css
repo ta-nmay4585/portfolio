@@ -451,12 +451,80 @@ a:focus-visible {
 }
 
 .education-card {
+  --education-accent: #bd6800;
+  position: relative;
   min-width: 0;
-  padding: 22px;
+  padding: 24px 22px 22px;
+  overflow: hidden;
+  isolation: isolate;
   border: 1px solid var(--line);
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.42);
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 100% 0, rgba(255, 255, 255, 0.9), transparent 44%),
+    rgba(255, 255, 255, 0.48);
   box-shadow: 0 10px 22px rgba(78, 53, 21, 0.06);
+  transition: transform 260ms ease, box-shadow 260ms ease, border-color 260ms ease;
+}
+
+.education-card:nth-child(2) {
+  --education-accent: #2876c8;
+}
+
+.education-card:nth-child(3) {
+  --education-accent: #e27b2f;
+}
+
+.education-card::before {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--education-accent), rgba(255, 255, 255, 0.35));
+  content: "";
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 420ms cubic-bezier(0.2, 0.75, 0.25, 1);
+}
+
+.education-card::after {
+  position: absolute;
+  top: 16px;
+  right: 17px;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(50, 46, 43, 0.08);
+  border-radius: 50%;
+  color: var(--education-accent);
+  background: rgba(255, 255, 255, 0.76);
+  box-shadow: 0 6px 16px rgba(54, 44, 34, 0.08);
+  content: attr(data-mark);
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 15px;
+  font-weight: 800;
+  transition: transform 300ms ease, box-shadow 300ms ease;
+}
+
+.education-card:hover {
+  border-color: color-mix(in srgb, var(--education-accent) 36%, var(--line));
+  box-shadow: 0 20px 36px rgba(65, 47, 23, 0.13);
+  transform: translateY(-7px);
+}
+
+.education-card:hover::before {
+  transform: scaleX(1);
+}
+
+.education-card:hover::after {
+  box-shadow: 0 8px 20px rgba(54, 44, 34, 0.13);
+  transform: rotate(8deg) scale(1.08);
+}
+
+.education-card h3 {
+  padding-right: 38px;
 }
 
 .education-period {
@@ -1024,6 +1092,13 @@ a:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  .education-card,
+  .education-card::before,
+  .education-card::after {
+    transition: none !important;
+    transform: none !important;
   }
 
   .hero-stage {
