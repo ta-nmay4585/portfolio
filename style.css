@@ -709,6 +709,30 @@ a:focus-visible {
   gap: 10px 14px;
 }
 
+.linkedin-link {
+  gap: 7px;
+}
+
+.linkedin-icon {
+  width: 18px;
+  height: 18px;
+  display: inline-grid;
+  flex: 0 0 18px;
+  place-items: center;
+  border-radius: 3px;
+  color: #ffffff;
+  background: #0a66c2;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: -0.06em;
+  line-height: 1;
+}
+
+.linkedin-link:hover .linkedin-icon {
+  background: #004182;
+}
+
 .contact-action p {
   max-width: 250px;
   margin: 0 0 21px;
