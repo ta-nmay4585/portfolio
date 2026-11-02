@@ -527,6 +527,25 @@ a:focus-visible {
   padding-right: 38px;
 }
 
+.education-reveal-enabled .education-card {
+  opacity: 0;
+  transform: translateY(28px) rotateX(4deg) scale(0.985);
+  transition:
+    opacity 620ms ease var(--education-delay, 0ms),
+    transform 680ms cubic-bezier(0.2, 0.75, 0.25, 1) var(--education-delay, 0ms),
+    box-shadow 260ms ease,
+    border-color 260ms ease;
+}
+
+.education-reveal-enabled .education-card.is-visible {
+  opacity: 1;
+  transform: translateY(0) rotateX(0) scale(1);
+}
+
+.education-reveal-enabled .education-card.is-visible:hover {
+  transform: translateY(-7px) rotateX(0) scale(1.01);
+}
+
 .education-period {
   margin: 0 0 14px;
   color: var(--orange);
@@ -1094,9 +1113,11 @@ a:focus-visible {
     scroll-behavior: auto;
   }
 
+  .education-reveal-enabled .education-card,
   .education-card,
   .education-card::before,
   .education-card::after {
+    opacity: 1 !important;
     transition: none !important;
     transform: none !important;
   }
