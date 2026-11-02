@@ -213,3 +213,31 @@ if (scene && heroStage && targetGrid && skillsHeading) {
   reducedMotion.addEventListener("change", configureHandoff);
   window.addEventListener("load", scheduleUpdate, { once: true });
 }
+
+const educationCards = [...document.querySelectorAll(".education-card")];
+const reducedMotionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+if (
+  educationCards.length &&
+  !reducedMotionPreference.matches &&
+  "IntersectionObserver" in window
+) {
+  document.body.classList.add("education-reveal-enabled");
+
+  const educationObserver = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.16, rootMargin: "0px 0px -5% 0px" }
+  );
+
+  educationCards.forEach((card, index) => {
+    card.style.setProperty("--education-delay", `${index * 130}ms`);
+    educationObserver.observe(card);
+  });
+}
