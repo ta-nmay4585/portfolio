@@ -1158,3 +1158,217 @@ a:focus-visible {
   font-size: 11px;
   font-weight: 800;
 }
+
+/* Education journey: a story-like timeline with a scroll-progress rail. */
+.education-journey-note {
+  max-width: 570px;
+  margin: 23px 0 0;
+  color: #5d5650;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.education-timeline {
+  --journey-progress: 0;
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 55px;
+  padding-top: 36px;
+}
+
+.education-timeline-rail {
+  position: absolute;
+  top: 12px;
+  right: 16.666%;
+  left: 16.666%;
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(61, 49, 35, 0.16);
+}
+
+.education-timeline-progress {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #c87817, #4f91f4, #e27b2f);
+  box-shadow: 0 0 12px rgba(189, 104, 0, 0.28);
+  transform: scaleX(var(--journey-progress));
+  transform-origin: left center;
+}
+
+.education-milestone {
+  display: flex;
+  min-height: 310px;
+  flex-direction: column;
+  padding: 24px 21px 21px;
+  border-radius: 15px;
+  background:
+    radial-gradient(circle at 100% 0, rgba(255, 255, 255, 0.9), transparent 43%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.78), rgba(255, 255, 255, 0.38));
+}
+
+.education-foundation { --education-accent: #c87817; }
+.education-engineering { --education-accent: #2876c8; }
+.education-data { --education-accent: #e27b2f; }
+
+.education-node {
+  position: absolute;
+  z-index: 2;
+  top: -36px;
+  left: 50%;
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border: 3px solid var(--paper);
+  border-radius: 50%;
+  color: #fffaf0;
+  background: var(--education-accent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--education-accent) 45%, transparent), 0 4px 12px rgba(61, 49, 35, 0.18);
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 8px;
+  font-weight: 800;
+  transform: translateX(-50%) scale(0.82);
+  transition: transform 420ms cubic-bezier(0.2, 0.75, 0.25, 1), box-shadow 420ms ease;
+}
+
+.education-card.is-visible .education-node {
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--education-accent) 17%, transparent), 0 4px 14px rgba(61, 49, 35, 0.18);
+  transform: translateX(-50%) scale(1);
+}
+
+.education-step-label {
+  margin: 0 0 7px;
+  color: var(--education-accent);
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: 0.13em;
+}
+
+.education-milestone .education-period {
+  margin-bottom: 12px;
+}
+
+.education-milestone h3 {
+  margin-bottom: 13px;
+  font-size: clamp(21px, 2vw, 26px);
+}
+
+.education-milestone .education-detail {
+  margin-top: auto;
+  padding-top: 9px;
+}
+
+.education-results {
+  grid-template-columns: 1fr 1fr;
+  gap: 9px;
+  margin-top: auto;
+  padding-top: 17px;
+  border-top: 0;
+}
+
+.education-results div {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 7px;
+  padding: 11px 10px;
+  border: 1px solid rgba(55, 49, 43, 0.1);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.58);
+}
+
+.education-results dt {
+  font-size: 9px;
+  line-height: 1.4;
+}
+
+.education-results dd {
+  color: var(--education-accent, var(--orange));
+  font-size: 22px;
+  line-height: 1;
+}
+
+.education-timeline > .education-card:last-child {
+  grid-column: auto;
+}
+
+@media (max-width: 900px) {
+  .education-timeline {
+    gap: 12px;
+  }
+
+  .education-milestone {
+    min-height: 330px;
+    padding-inline: 15px;
+  }
+
+  .education-results {
+    grid-template-columns: 1fr;
+    gap: 7px;
+  }
+}
+
+@media (max-width: 767px) {
+  .education-timeline {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    margin-top: 43px;
+    padding: 0 0 0 38px;
+  }
+
+  .education-timeline-rail {
+    top: 12px;
+    right: auto;
+    bottom: 12px;
+    left: 11px;
+    width: 2px;
+    height: auto;
+  }
+
+  .education-timeline-progress {
+    transform: scaleY(var(--journey-progress));
+    transform-origin: center top;
+  }
+
+  .education-milestone {
+    min-height: 0;
+    padding: 24px 20px 20px;
+  }
+
+  .education-node {
+    top: 18px;
+    left: -38px;
+    transform: scale(0.82);
+  }
+
+  .education-card.is-visible .education-node {
+    transform: scale(1);
+  }
+
+  .education-results {
+    grid-template-columns: 1fr 1fr;
+    margin-top: 17px;
+  }
+}
+
+@media (max-width: 420px) {
+  .education-results {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .education-timeline-progress {
+    transform: scaleX(1);
+  }
+
+  .education-card.is-visible .education-node,
+  .education-node {
+    transform: none;
+    transition: none;
+  }
+}
