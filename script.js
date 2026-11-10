@@ -215,7 +215,52 @@ if (scene && heroStage && targetGrid && skillsHeading) {
 }
 
 const educationCards = [...document.querySelectorAll(".education-card")];
+const educationTimeline = document.querySelector(".education-timeline");
 const reducedMotionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+const educationCounts = new WeakSet();
+let educationFrame = null;
+
+function updateEducationJourney() {
+  educationFrame = null;
+  if (!educationTimeline) return;
+  if (reducedMotionPreference.matches) {
+    educationTimeline.style.setProperty("--journey-progress", "1");
+    return;
+  }
+
+  const rect = educationTimeline.getBoundingClientRect();
+  const start = window.innerHeight * 0.82;
+  const finish = window.innerHeight * 0.28;
+  const progress = clamp((start - rect.top) / (rect.height + start - finish));
+  educationTimeline.style.setProperty("--journey-progress", progress.toFixed(3));
+}
+
+function scheduleEducationJourney() {
+  if (educationFrame === null) {
+    educationFrame = requestAnimationFrame(updateEducationJourney);
+  }
+}
+
+function animateEducationCount(count) {
+  if (educationCounts.has(count) || reducedMotionPreference.matches) return;
+  educationCounts.add(count);
+
+  const target = Number(count.dataset.value);
+  const decimals = Number(count.dataset.decimals || 0);
+  const suffix = count.dataset.suffix || "";
+  const duration = 1050;
+  const startTime = performance.now();
+  count.textContent = `${(0).toFixed(decimals)}${suffix}`;
+
+  function tick(now) {
+    const progress = Math.min(1, (now - startTime) / duration);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    count.textContent = `${(target * eased).toFixed(decimals)}${suffix}`;
+    if (progress < 1) requestAnimationFrame(tick);
+  }
+
+  requestAnimationFrame(tick);
+}
 
 if (
   educationCards.length &&
@@ -227,17 +272,24 @@ if (
   const educationObserver = new IntersectionObserver(
     (entries, observer) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("is-visible");
-          observer.unobserve(entry.target);
-        }
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-visible");
+        entry.target.querySelectorAll(".education-count").forEach(animateEducationCount);
+        observer.unobserve(entry.target);
       });
     },
     { threshold: 0.16, rootMargin: "0px 0px -5% 0px" }
   );
 
   educationCards.forEach((card, index) => {
-    card.style.setProperty("--education-delay", `${index * 130}ms`);
+    card.style.setProperty("--education-delay", `${index * 145}ms`);
     educationObserver.observe(card);
   });
+}
+
+if (educationTimeline) {
+  scheduleEducationJourney();
+  window.addEventListener("scroll", scheduleEducationJourney, { passive: true });
+  window.addEventListener("resize", scheduleEducationJourney);
+  window.addEventListener("load", scheduleEducationJourney, { once: true });
 }
